@@ -26,6 +26,11 @@ body {
     width: 32%;
     height: 32%;
     border: 2px solid black;
+    margin: auto;
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cells:hover {
@@ -36,4 +41,9 @@ h2 {
     text-align: center;
     font-size: 64px;
     padding-top: 100px;
+}
+
+.marked{
+    border-color: red;
+
 }
