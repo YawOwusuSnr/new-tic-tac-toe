@@ -1,12 +1,12 @@
 const board = document.querySelector('.board')
-
+const cells = document.querySelectorAll('.cells')
 
 var gameBoard = (() => {
     const board = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     return {board}
 })();
 
-const Player (token, wins) => {
+const Player = (token, wins) => {
     let wins = 0
     const wonGame = () => {
         wins += 1
@@ -33,3 +33,5 @@ function renderGameboard() {
 }
 
 renderGameboard()
+
+playGame()
