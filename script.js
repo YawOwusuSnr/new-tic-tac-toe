@@ -1,22 +1,11 @@
 const board = document.querySelector('.board')
+const winner = document.querySelector('#winner')
 const cells = document.querySelectorAll('.cells')
 let piecesPlayed = 1;
 
-const cell1 = document.getElementById('0')
-const cell2 = document.getElementById('1')
-const cell3 = document.getElementById('2')
-const cell4 = document.getElementById('3')
-const cell5 = document.getElementById('4')
-const cell6 = document.getElementById('5')
-const cell7 = document.getElementById('6')
-const cell8 = document.getElementById('7')
-const cell9 = document.getElementById('8')
-
-
-
 
 var gameBoard = (() => {
-    const board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    const board = [[null, null, null], [null, null, null], [null, null, null]]
     var mark = (loc, player) => {
         row = (loc % 3)
         col = Math.floor(loc/3)
@@ -24,28 +13,58 @@ var gameBoard = (() => {
         return board[row][col]
     }
     var checkContent = () => {
-        /* board.forEach(row => {
-            row.forEach(el => {
-                console.log(el)
-            })
-        })*/
         console.log(board[0])
         console.log(board[1])
         console.log(board[2])
     }
-    return {board, mark, checkContent};
+
+    var checkCol = (loc) => {
+        row = (loc % 3)
+        if ((board[row][0] == board[row][1]) && (board[row][1] == board[row][2])) {
+            console.log('1')
+            return true
+        }
+    }
+
+    var checkRow = (loc) => {
+        col = Math.floor(loc/3)        
+        if ((board[0][col] == board[1][col]) && (board[1][col] == board[2][col])) {
+            console.log('2')
+            return true
+        }
+    }
+
+    var leftToRight = () => {
+        if (((board[0][0] == board[1][1]) && (board[1][1] == board[2][2])) && (board[0][0] != null))  {
+            console.log('3')
+            return true
+        }
+    }
+
+    var rightToLeft = () => {
+        if (((board[0][2] == board[1][1]) && (board[1][1] == board[2][0])) && (board[0][2] != null)) {
+            console.log('4')
+            return true
+        }
+    }
+
+    var checkForWin = (locate) => { if (checkRow(locate) || (checkCol(locate)) || (leftToRight()) || (rightToLeft())) {
+        winner.textContent = `Player ${currPlayer.char()} Wins!`
+        return currPlayer.char()
+    } }
+
+    return {board, mark, checkContent, checkForWin,};
 })();
 
 const Player = (token) => {
     let wins = 0
-    let moves = 0
     const sayName = () => console.log(`my name is ${token}`);
     const sayWins = () => console.log(`I have ${wins} wins`);
     const wonGame = () => {
         wins += 1
     }
     const play = () => {
-        moves += 1
+        //
     }
     return {sayName, sayWins, wonGame, play, token,}
 }
@@ -91,6 +110,7 @@ function markSpot(ids) {
         } else {
             user2.play()
         }
+        console.log(gameBoard.checkForWin(ids.id))
         piecesPlayed += 1
     }
 }
@@ -115,6 +135,12 @@ cells.forEach((box) => {
 
 
 
+const resetB = document.createElement('button')
+resetB.textContent = 'RESET'
+resetB.setAttribute('style', 'color: white; background: red; padding: 20px 20px; font-size: 20px; border-radius: 5px');  
+document.body.appendChild(resetB)
 
-reRenderGameboard()
-// backtick `
+resetB.addEventListener('click', () => {
+    reRenderGameboard()
+    resetB.classList.toggle('marked') 
+});
