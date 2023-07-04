@@ -34,7 +34,7 @@ body {
 }
 
 .cells:hover {
-    background-color: aqua;
+    background-color: rgb(204, 211, 211);
 }
 
 h2 {

@@ -5,8 +5,8 @@ let piecesPlayed = 1;
 
 
 var gameBoard = (() => {
-    const board = [[null, null, null], [null, null, null], [null, null, null]]
-    var mark = (loc, player) => {
+    let board = [[null, null, null], [null, null, null], [null, null, null]]
+    var mark = (loc) => {
         row = (loc % 3)
         col = Math.floor(loc/3)
         board[row][col] = currPlayer.num()
@@ -53,7 +53,11 @@ var gameBoard = (() => {
         return currPlayer.char()
     } }
 
-    return {board, mark, checkContent, checkForWin,};
+    var reset = () => {
+        board = [[null, null, null], [null, null, null], [null, null, null]]
+    }
+
+    return {board, mark, checkContent, checkForWin, reset,};
 })();
 
 const Player = (token) => {
@@ -72,16 +76,16 @@ const Player = (token) => {
 const user1 = Player("X")
 const user2 = Player("O")
 
-
 function reRenderGameboard() {
     for (let i = 0; i < 9; i++) {
-        cell = document.getElementById(`${i}`);
+        const cell = document.getElementById(`${i}`);
         cell.textContent = ''
         cell.classList.remove('marked')
-        winner.textContent = ''
     }
+    winner.textContent = ''
+    gameBoard.reset()
+    piecesPlayed = 1;
 }
-
 
 var currPlayer = (() => {
     num = () => { if (piecesPlayed % 2 == 0) {
@@ -125,14 +129,8 @@ cells.forEach((box) => {
             markSpot(event.target)
             gameBoard.checkContent()
         }
-
-
-        
-    }
-    );
-}); 
-
-
+    });
+});
 
 const resetB = document.createElement('button')
 resetB.textContent = 'RESET'
