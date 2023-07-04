@@ -72,13 +72,13 @@ const Player = (token) => {
 const user1 = Player("X")
 const user2 = Player("O")
 
-//var displayController()
 
 function reRenderGameboard() {
     for (let i = 0; i < 9; i++) {
         cell = document.getElementById(`${i}`);
         cell.textContent = ''
         cell.classList.remove('marked')
+        winner.textContent = ''
     }
 }
 
@@ -114,7 +114,6 @@ function markSpot(ids) {
         piecesPlayed += 1
     }
 }
-
 
 cells.forEach((box) => {
     box.addEventListener('click', (event) => {
